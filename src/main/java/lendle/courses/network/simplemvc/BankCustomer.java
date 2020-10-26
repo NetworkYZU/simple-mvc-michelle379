@@ -58,10 +58,11 @@ public class BankCustomer {
     
     private static Map<String, BankCustomer> db=new HashMap<>();
     static{
+        //輸入資料後輸出其他相關資訊 eg:輸入customer1 -->帶入10000--->選擇網址
         db.put("customer1", new BankCustomer("customer1", "name1", "name1", 10000));
         db.put("customer2", new BankCustomer("customer2", "name2", "name2", 15000));
         db.put("customer3", new BankCustomer("customer3", "name3", "name3", -1));
-        db.put("customer4", new BankCustomer("customer4", "name4", "name4", 8000));
+        db.put("customer4", new BankCustomer("customer4", "name4", "name4", 8000));//數字==balance
     }
     
     public static BankCustomer getCustomer(String id){

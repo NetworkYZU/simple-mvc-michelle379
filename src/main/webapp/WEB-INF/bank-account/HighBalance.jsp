@@ -16,6 +16,7 @@
         <%
             BankCustomer customer=(BankCustomer)request.getAttribute("customer");
         %>
+        
         <h1>Hello, <%=customer.getFirstName()%></h1>
         您太厲害了！
     </body>

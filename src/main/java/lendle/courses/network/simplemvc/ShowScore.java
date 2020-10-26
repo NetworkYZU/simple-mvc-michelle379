@@ -6,6 +6,7 @@
 package lendle.courses.network.simplemvc;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -31,11 +32,36 @@ public class ShowScore extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String id=request.getParameter("id");
-        String address=null;
-        //按照分數選擇頁面
-        request.getRequestDispatcher(address).forward(request, response);
+        Student studentid=Student.getStudent(id);
+        //依照數值選擇要轉的網址
+        if(studentid==null){
+            request.getRequestDispatcher("/WEB-INF/score-report/UnknownStudent.jsp").forward(request, response);
+        }else{
+            request.setAttribute("student", studentid);
+            if(studentid.getScore()<60){
+            //轉址
+            request.getRequestDispatcher("/WEB-INF/score-report/LowScore.jsp").forward(request, response);
+        }else if(studentid.getScore()>70){
+            request.getRequestDispatcher("/WEB-INF/score-report/HighScore.jsp").forward(request, response);
+        }else{
+            request.getRequestDispatcher("/WEB-INF/score-report/NormalScore.jsp").forward(request, response);
+        }
+        
     }
-
+        response.setContentType("text/html;charset=UTF-8");
+        try ( PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet ShowBalance2</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet ShowBalance2 at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
+    }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
